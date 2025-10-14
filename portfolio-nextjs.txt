@@ -1,0 +1,185 @@
+portfolio-nextjs/
+├── .env.local                    # Environment variables
+├── .eslintrc.json               # ESLint configuration
+├── .gitignore                   # Git ignore rules
+├── next.config.js               # Next.js configuration with Turbo Pack
+├── package.json                 # Dependencies and scripts
+├── postcss.config.js            # PostCSS configuration
+├── tailwind.config.ts           # Tailwind configuration
+├── tsconfig.json                # TypeScript configuration
+├── README.md                    # Project documentation
+│
+├── public/                      # Static assets
+│   ├── icons/                   # App icons
+│   │   ├── favicon.ico
+│   │   ├── apple-touch-icon.png
+│   │   └── android-chrome-192x192.png
+│   ├── images/                  # Static images
+│   │   ├── hero/
+│   │   ├── projects/
+│   │   └── background/
+│   ├── documents/               # PDF files, resume
+│   │   └── resume.pdf
+│   └── audio/                   # Sound effects (optional)
+│       └── notification.mp3
+│
+├── src/                         # Source code
+│   ├── app/                     # Next.js App Router
+│   │   ├── globals.css          # Global styles
+│   │   ├── layout.tsx           # Root layout
+│   │   ├── loading.tsx          # Global loading UI
+│   │   ├── error.tsx            # Global error UI
+│   │   ├── not-found.tsx        # 404 page
+│   │   ├── page.tsx             # Home page
+│   │   │
+│   │   ├── about/               # About section as route
+│   │   │   ├── page.tsx
+│   │   │   └── loading.tsx
+│   │   │
+│   │   ├── projects/            # Projects section
+│   │   │   ├── page.tsx
+│   │   │   ├── loading.tsx
+│   │   │   └── [slug]/
+│   │   │       └── page.tsx     # Individual project page
+│   │   │
+│   │   ├── experience/          # Work experience
+│   │   │   └── page.tsx
+│   │   │
+│   │   ├── contact/             # Contact page
+│   │   │   └── page.tsx
+│   │   │
+│   │   └── api/                 # API routes
+│   │       ├── contact/
+│   │       │   └── route.ts     # Contact form handler
+│   │       ├── spotify/
+│   │       │   ├── current-track/
+│   │       │   │   └── route.ts # Current Spotify track
+│   │       │   └── playlists/
+│   │       │       └── route.ts # Spotify playlists
+│   │       └── analytics/
+│   │           └── route.ts     # Analytics endpoint
+│   │
+│   ├── components/              # Reusable components
+│   │   ├── ui/                  # Basic UI components (shadcn/ui style)
+│   │   │   ├── Button.tsx
+│   │   │   ├── Card.tsx
+│   │   │   ├── Modal.tsx
+│   │   │   ├── Toast.tsx
+│   │   │   ├── Badge.tsx
+│   │   │   ├── Input.tsx
+│   │   │   ├── Textarea.tsx
+│   │   │   ├── Tabs.tsx
+│   │   │   ├── Tooltip.tsx
+│   │   │   ├── Progress.tsx
+│   │   │   └── index.ts         # Barrel export
+│   │   │
+│   │   ├── layout/              # Layout components
+│   │   │   ├── Header.tsx       # Navigation header
+│   │   │   ├── Footer.tsx       # Footer
+│   │   │   ├── Sidebar.tsx      # Mobile sidebar
+│   │   │   ├── Navigation.tsx   # Navigation logic
+│   │   │   └── ScrollToTop.tsx  # Scroll to top button
+│   │   │
+│   │   ├── sections/            # Page sections
+│   │   │   ├── Hero.tsx         # Hero section
+│   │   │   ├── About.tsx        # About section
+│   │   │   ├── Skills.tsx       # Skills showcase
+│   │   │   ├── Projects.tsx     # Projects grid
+│   │   │   ├── Experience.tsx   # Work experience
+│   │   │   ├── Education.tsx    # Education timeline
+│   │   │   ├── Achievements.tsx # Certificates & achievements
+│   │   │   ├── Spotify.tsx      # Spotify integration
+│   │   │   ├── Contact.tsx      # Contact form
+│   │   │   └── index.ts         # Barrel export
+│   │   │
+│   │   ├── animations/          # Animation components
+│   │   │   ├── FadeInUp.tsx     # Fade in animation
+│   │   │   ├── SlideIn.tsx      # Slide animations
+│   │   │   ├── Parallax.tsx     # Parallax effects
+│   │   │   ├── TypeWriter.tsx   # Typewriter effect
+│   │   │   ├── GlitchText.tsx   # Glitch text effect
+│   │   │   ├── FloatingElements.tsx # Floating particles
+│   │   │   └── LoadingSpinner.tsx   # Custom loaders
+│   │   │
+│   │   ├── spotify/             # Spotify-specific components
+│   │   │   ├── NowPlaying.tsx   # Current track display
+│   │   │   ├── PlaylistCard.tsx # Playlist component
+│   │   │   ├── TrackList.tsx    # Track listing
+│   │   │   ├── MusicPlayer.tsx  # Custom music player UI
+│   │   │   └── SpotifyConnect.tsx # Spotify connection status
+│   │   │
+│   │   ├── projects/            # Project-specific components
+│   │   │   ├── ProjectCard.tsx  # Individual project card
+│   │   │   ├── ProjectGrid.tsx  # Projects grid layout
+│   │   │   ├── ProjectFilter.tsx # Filter projects
+│   │   │   ├── ProjectModal.tsx # Project details modal
+│   │   │   └── TechStack.tsx    # Technology badges
+│   │   │
+│   │   ├── forms/               # Form components
+│   │   │   ├── ContactForm.tsx  # Contact form
+│   │   │   ├── Newsletter.tsx   # Newsletter signup
+│   │   │   └── FormField.tsx    # Reusable form field
+│   │   │
+│   │   └── effects/             # Visual effects
+│   │       ├── CyberGrid.tsx    # Cyberpunk grid background
+│   │       ├── NeonGlow.tsx     # Neon glow effects
+│   │       ├── MatrixRain.tsx   # Matrix-style rain
+│   │       ├── ParticleSystem.tsx # Particle effects
+│   │       └── GradientBlur.tsx # Gradient backgrounds
+│   │
+│   ├── hooks/                   # Custom React hooks
+│   │   ├── useScrollAnimation.ts # Scroll-triggered animations
+│   │   ├── useTheme.ts          # Theme management
+│   │   ├── useSpotify.ts        # Spotify API integration
+│   │   ├── useLocalStorage.ts   # Local storage hook
+│   │   ├── useIntersection.ts   # Intersection Observer
+│   │   ├── useMediaQuery.ts     # Responsive design hook
+│   │   ├── useKeyboard.ts       # Keyboard shortcuts
+│   │   └── useSound.ts          # Sound effects
+│   │
+│   ├── lib/                     # Utility libraries
+│   │   ├── spotify.ts           # Spotify API client
+│   │   ├── analytics.ts         # Analytics utilities
+│   │   ├── utils.ts             # General utilities
+│   │   ├── constants.ts         # App constants
+│   │   ├── validations.ts       # Form validations
+│   │   ├── animations.ts        # Animation configs
+│   │   └── database.ts          # Database connection (if needed)
+│   │
+│   ├── data/                    # Static data and configurations
+│   │   ├── projects.ts          # Projects data
+│   │   ├── skills.ts            # Skills data
+│   │   ├── experience.ts        # Work experience
+│   │   ├── education.ts         # Education data
+│   │   ├── certificates.ts      # Certifications
+│   │   ├── social-links.ts      # Social media links
+│   │   ├── spotify-playlists.ts # Curated playlists
+│   │   └── navigation.ts        # Navigation structure
+│   │
+│   ├── styles/                  # Style configurations
+│   │   ├── components.css       # Component-specific styles
+│   │   ├── animations.css       # Animation keyframes
+│   │   ├── utilities.css        # Custom utility classes
+│   │   └── themes.css           # Theme variables
+│   │
+│   ├── types/                   # TypeScript type definitions
+│   │   ├── global.d.ts          # Global types
+│   │   ├── spotify.ts           # Spotify API types
+│   │   ├── project.ts           # Project types
+│   │   ├── user.ts              # User-related types
+│   │   ├── api.ts               # API response types
+│   │   └── theme.ts             # Theme types
+│   │
+│   └── utils/                   # Utility functions
+│       ├── cn.ts                # className utility
+│       ├── formatters.ts        # Data formatters
+│       ├── validators.ts        # Input validators
+│       ├── api-helpers.ts       # API helper functions
+│       ├── date.ts              # Date utilities
+│       ├── colors.ts            # Color utilities
+│       └── motion.ts            # Motion/animation helpers
+│
+└── docs/                        # Documentation (optional)
+    ├── SETUP.md                 # Setup instructions
+    ├── COMPONENTS.md            # Component documentation
+    └── API.md                   # API documentation
