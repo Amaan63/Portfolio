@@ -80,7 +80,7 @@ const Header = () => {
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
               />
             </div>
-            <div className="hidden sm:block">
+            <div className=" sm:block">
               <span className="text-white font-bold text-xl bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text">
                 maan.dev
               </span>
@@ -153,6 +153,5 @@ const Header = () => {
       </div>
     </header>
   );
-
 };
 export default Header;
