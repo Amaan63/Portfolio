@@ -44,8 +44,8 @@ const ExperienceSection: React.FC = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          <span className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent font-bold text-lg mb-4">
-            <Briefcase size={20} className="text-cyan-400" />
+          <span className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent font-bold text-6xl mb-4">
+            <Briefcase size={60} className="text-cyan-400" />
             Work Experience
           </span>
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">My Professional Journey</h2>
