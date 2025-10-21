@@ -265,10 +265,12 @@ const HeroSection = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             style={{
-              transform: window.innerWidth >= 1024
-                ? `perspective(1000px) rotateY(${mousePosition.x * 15}deg) rotateX(${mousePosition.y * 15}deg)`
-                : 'none',
+              transform:
+                typeof window !== "undefined" && window.innerWidth >= 1024
+                  ? `perspective(1000px) rotateY(${mousePosition.x * 15}deg) rotateX(${mousePosition.y * 15}deg)`
+                  : "none",
             }}
+
           >
             <div className="relative group max-w-md mx-auto lg:max-w-none">
               <motion.div
