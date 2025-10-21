@@ -8,7 +8,6 @@ import { IconBrandGithub, IconBrandLinkedin, IconBrandSpotify, IconBrandTwitter 
 import heroImage from "@/assets/Images/Peter.jpeg";
 import Image from "next/image";
 
-// Define a type for our dot's random properties for better TypeScript support
 type DotConfig = {
   left: string;
   top: string;
@@ -20,8 +19,6 @@ const HeroSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [currentRole, setCurrentRole] = useState(0);
   const heroRef = useRef<HTMLDivElement>(null);
-
-  // Create state to hold the dot configurations
   const [dots, setDots] = useState<DotConfig[]>([]);
 
   const roles = [
@@ -32,16 +29,16 @@ const HeroSection = () => {
     "Coffee Addict ☕",
   ];
 
-  // ✅ FIX: Generate random dot values ONLY on the client to prevent hydration errors
+  // Generate random dot values ONLY on the client
   useEffect(() => {
-    const newDots = [...Array(80)].map(() => ({
+    const newDots = [...Array(50)].map(() => ({
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
       duration: Math.random() * 4 + 3,
       delay: Math.random() * 5,
     }));
     setDots(newDots);
-  }, []); // The empty array [] ensures this effect runs only once on the client
+  }, []);
 
   // Role switching interval
   useEffect(() => {
@@ -52,7 +49,7 @@ const HeroSection = () => {
   }, [roles.length]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    if (!heroRef.current) return;
+    if (!heroRef.current || window.innerWidth < 1024) return;
     const rect = heroRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
     const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
@@ -71,16 +68,16 @@ const HeroSection = () => {
   return (
     <section
       id="home"
-      className="min-h-screen relative overflow-hidden bg-gradient-to-br from-black via-purple-900/20 to-black scroll-mt-24"
+      className="min-h-screen relative overflow-hidden bg-gradient-to-br from-black via-purple-900/20 to-black scroll-mt-20"
       ref={heroRef}
       onMouseMove={handleMouseMove}
     >
       {/* Animated Background */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 pointer-events-none">
         {dots.map((dot, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-cyan-400 rounded-full"
+            className="absolute w-0.5 h-0.5 sm:w-1 sm:h-1 bg-cyan-400 rounded-full"
             style={{ left: dot.left, top: dot.top }}
             animate={{
               y: [0, -100, 0],
@@ -97,33 +94,34 @@ const HeroSection = () => {
         ))}
       </div>
 
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 pt-20">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-16">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full">
           {/* Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center lg:text-left"
+            className="text-center lg:text-left order-2 lg:order-1"
           >
             {/* Status Badge */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-3 bg-gradient-to-r from-green-500/20 to-emerald-500/20 backdrop-blur-md rounded-full px-6 py-3 mb-8 border border-green-500/30"
+              className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-green-500/20 to-emerald-500/20 backdrop-blur-md rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-6 sm:mb-8 border border-green-500/30"
               whileHover={{ scale: 1.05 }}
             >
               <motion.div
-                className="w-3 h-3 bg-green-400 rounded-full"
+                className="w-2 h-2 sm:w-3 sm:h-3 bg-green-400 rounded-full"
                 animate={{ scale: [1, 1.3, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
-              <span className="text-green-400 font-medium">
+              <span className="text-green-400 font-medium text-xs sm:text-sm">
                 Available for opportunities
               </span>
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                className="text-sm sm:text-base"
               >
                 🚀
               </motion.div>
@@ -131,7 +129,7 @@ const HeroSection = () => {
 
             {/* Main Heading */}
             <motion.h1
-              className="text-5xl lg:text-7xl font-bold text-white mb-8 leading-tight"
+              className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 sm:mb-8 leading-tight"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
@@ -143,7 +141,7 @@ const HeroSection = () => {
               <motion.span
                 animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
                 transition={{ repeat: Infinity, duration: 2.5, delay: 1 }}
-                className="inline-block ml-4"
+                className="inline-block ml-2 sm:ml-4"
               >
                 👋
               </motion.span>
@@ -154,10 +152,10 @@ const HeroSection = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="mb-8 h-16 flex items-center justify-center lg:justify-start"
+              className="mb-6 sm:mb-8 h-12 sm:h-16 flex items-center justify-center lg:justify-start"
             >
-              <div className="text-2xl lg:text-3xl text-gray-300">
-                <span className="text-cyan-400 font-mono text-lg">&lt;</span>
+              <div className="text-xl sm:text-2xl lg:text-3xl text-gray-300">
+                <span className="text-cyan-400 font-mono text-base sm:text-lg">&lt;</span>
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={currentRole}
@@ -170,12 +168,12 @@ const HeroSection = () => {
                     {roles[currentRole]}
                   </motion.span>
                 </AnimatePresence>
-                <span className="text-cyan-400 font-mono text-lg">/&gt;</span>
+                <span className="text-cyan-400 font-mono text-base sm:text-lg">/&gt;</span>
               </div>
             </motion.div>
 
             <motion.p
-              className="text-gray-400 max-w-lg text-lg leading-relaxed mb-10"
+              className="text-gray-400 max-w-lg mx-auto lg:mx-0 text-sm sm:text-base lg:text-lg leading-relaxed mb-8 sm:mb-10 px-2 sm:px-0"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
@@ -187,20 +185,20 @@ const HeroSection = () => {
 
             {/* CTA Buttons */}
             <motion.div
-              className="flex flex-wrap gap-6 justify-center lg:justify-start mb-12"
+              className="flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-6 justify-center lg:justify-start mb-8 sm:mb-12"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
             >
               <motion.button
                 onClick={handleHireMe}
-                className="group relative bg-gradient-to-r from-cyan-500 via-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-semibold shadow-xl hover:shadow-2xl transition-all overflow-hidden"
+                className="group relative bg-gradient-to-r from-cyan-500 via-purple-600 to-pink-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold shadow-xl hover:shadow-2xl transition-all overflow-hidden text-sm sm:text-base"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <span className="relative z-10 flex items-center gap-3">
-                  <Zap size={20} />
-                  Let's Build Something Amazing
+                <span className="relative z-10 flex items-center justify-center gap-2 sm:gap-3">
+                  <Zap size={18} className="sm:w-5 sm:h-5" />
+                  <span className="whitespace-nowrap">Let's Build Something Amazing</span>
                   <motion.div
                     animate={{ x: [0, 5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
@@ -219,21 +217,21 @@ const HeroSection = () => {
               <motion.a
                 href="/Documents/Resume.pdf"
                 target="_blank"
-                className="flex items-center gap-3 border-2 border-cyan-400 text-cyan-400 px-8 py-4 rounded-full font-semibold hover:bg-cyan-400 hover:text-black transition-all backdrop-blur-sm"
+                className="flex items-center justify-center gap-2 sm:gap-3 border-2 border-cyan-400 text-cyan-400 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-cyan-400 hover:text-black transition-all backdrop-blur-sm text-sm sm:text-base"
                 whileHover={{
                   scale: 1.05,
                   boxShadow: "0 0 25px rgba(34, 211, 238, 0.4)",
                 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Download size={20} />
+                <Download size={18} className="sm:w-5 sm:h-5" />
                 Download Resume
               </motion.a>
             </motion.div>
 
             {/* Enhanced Social Links */}
             <motion.div
-              className="flex gap-4 justify-center lg:justify-start"
+              className="flex gap-3 sm:gap-4 justify-center lg:justify-start"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
@@ -248,13 +246,13 @@ const HeroSection = () => {
                   key={index}
                   href={href}
                   target={href.startsWith("http") ? "_blank" : ""}
-                  className={`text-gray-400 ${color} ${bg} transition-all p-3 rounded-full backdrop-blur-sm border border-white/10`}
+                  className={`text-gray-400 ${color} ${bg} transition-all p-2.5 sm:p-3 rounded-full backdrop-blur-sm border border-white/10`}
                   whileHover={{ y: -8, scale: 1.2, rotate: 5 }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1.1 + index * 0.1 }}
                 >
-                  <Icon size={24} />
+                  <Icon size={20} className="sm:w-6 sm:h-6" />
                 </motion.a>
               ))}
             </motion.div>
@@ -262,30 +260,33 @@ const HeroSection = () => {
 
           {/* Enhanced 3D Hero Image */}
           <motion.div
-            className="relative"
+            className="relative order-1 lg:order-2"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             style={{
-              transform: `perspective(1000px) rotateY(${mousePosition.x * 15}deg) rotateX(${mousePosition.y * 15}deg)`,
+              transform: window.innerWidth >= 1024
+                ? `perspective(1000px) rotateY(${mousePosition.x * 15}deg) rotateX(${mousePosition.y * 15}deg)`
+                : 'none',
             }}
           >
-            <div className="relative group">
+            <div className="relative group max-w-md mx-auto lg:max-w-none">
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-3xl opacity-60 group-hover:opacity-80 transition-opacity blur-2xl"
+                className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-2xl sm:rounded-3xl opacity-60 group-hover:opacity-80 transition-opacity blur-xl sm:blur-2xl"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               />
-              <div className="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-md p-8 rounded-3xl border border-gray-700/50 shadow-2xl">
+              <div className="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-md p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl border border-gray-700/50 shadow-2xl">
                 <Image
                   src={heroImage}
                   alt="Amaan Sayyed"
                   width={600}
                   height={600}
-                  className="max-w-sm mx-auto rounded-2xl shadow-2xl"
+                  className="w-full max-w-xs sm:max-w-sm mx-auto rounded-xl sm:rounded-2xl shadow-2xl"
                   placeholder="blur"
+                  priority
                 />
-                {/* Floating Tech Icons */}
+                {/* Floating Tech Icons - FIXED FOR MOBILE */}
                 <motion.div
                   animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
                   transition={{
@@ -293,9 +294,9 @@ const HeroSection = () => {
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
-                  className="absolute -top-6 -right-6 bg-gradient-to-r from-yellow-400 to-orange-500 text-black p-4 rounded-2xl shadow-xl"
+                  className="absolute -top-3 -right-3 sm:-top-6 sm:-right-6 bg-gradient-to-r from-yellow-400 to-orange-500 text-black p-2.5 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl z-10"
                 >
-                  <Code size={24} />
+                  <Code size={18} className="sm:w-6 sm:h-6" />
                 </motion.div>
 
                 <motion.div
@@ -305,9 +306,9 @@ const HeroSection = () => {
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
-                  className="absolute -bottom-6 -left-6 bg-gradient-to-r from-green-400 to-emerald-500 text-white p-4 rounded-2xl shadow-xl"
+                  className="absolute -bottom-3 -left-3 sm:-bottom-6 sm:-left-6 bg-gradient-to-r from-green-400 to-emerald-500 text-white p-2.5 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl z-10"
                 >
-                  <Coffee size={24} />
+                  <Coffee size={18} className="sm:w-6 sm:h-6" />
                 </motion.div>
 
                 <motion.div
@@ -317,9 +318,9 @@ const HeroSection = () => {
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
-                  className="absolute top-1/2 -right-8 bg-gradient-to-r from-purple-400 to-pink-500 text-white p-3 rounded-full shadow-xl"
+                  className="absolute top-1/2 -right-4 sm:-right-8 bg-gradient-to-r from-purple-400 to-pink-500 text-white p-2 sm:p-3 rounded-full shadow-xl z-10"
                 >
-                  <Zap size={20} />
+                  <Zap size={16} className="sm:w-5 sm:h-5" />
                 </motion.div>
               </div>
             </div>
@@ -329,7 +330,7 @@ const HeroSection = () => {
 
       {/* Enhanced Scroll Indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer"
+        className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer hidden sm:block"
         animate={{ y: [0, 15, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
         onClick={() => {
@@ -339,9 +340,9 @@ const HeroSection = () => {
           }
         }}
       >
-        <div className="w-8 h-14 border-2 border-cyan-400/60 rounded-full flex justify-center backdrop-blur-sm">
+        <div className="w-6 h-12 sm:w-8 sm:h-14 border-2 border-cyan-400/60 rounded-full flex justify-center backdrop-blur-sm">
           <motion.div
-            className="w-2 h-4 bg-gradient-to-b from-cyan-400 to-purple-500 rounded-full mt-3"
+            className="w-1.5 h-3 sm:w-2 sm:h-4 bg-gradient-to-b from-cyan-400 to-purple-500 rounded-full mt-2 sm:mt-3"
             animate={{ y: [0, 20, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           />
