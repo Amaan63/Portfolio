@@ -1,8 +1,11 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import AboutSection from "@/sections/AboutUs";
+import HeroSection from "@/sections/HeroSection";
 
 export default function Home() {
   return (
-    <><h1>Amaan Sayyed</h1></>
+    <main>
+      <HeroSection />
+      <AboutSection />
+    </main>
   );
 }
