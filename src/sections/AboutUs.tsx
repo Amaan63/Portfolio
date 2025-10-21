@@ -56,21 +56,32 @@ const AboutSection: React.FC = () => {
 
   return (
     <section id="about" className="py-20 pt-20 bg-black text-white scroll-mt-24" ref={aboutRef}>
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-14 lg:mb-16"
         >
-          <span className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent font-bold text-6xl mb-4">
-            <User size={60} className="text-cyan-400" />
-            About Me
-          </span>
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+          {/* Section Header */}
+          <div className="inline-flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <motion.div
+              initial={{ rotate: 0 }}
+              animate={isInView ? { rotate: 360 } : {}}
+              transition={{ duration: 1, delay: 0.3 }}
+            >
+              <User size={40} className="sm:w-12 sm:h-12 lg:w-14 lg:h-14 text-cyan-400" />
+            </motion.div>
+            <span className="bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent font-bold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl">
+              About Me
+            </span>
+          </div>
+
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 sm:mb-6 leading-tight px-2">
             More than just a developer
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+          <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base lg:text-lg leading-relaxed px-4 sm:px-6">
             Passionate about creating digital experiences that matter. When I'm
             not coding, you'll find me exploring new technologies or brewing the
             perfect cup of coffee.
@@ -117,3 +128,4 @@ const AboutSection: React.FC = () => {
 
 // It's good practice to provide a default export for components
 export default AboutSection;
+
