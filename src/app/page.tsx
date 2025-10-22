@@ -1,6 +1,7 @@
 import AboutSection from "@/sections/AboutUs";
 import ExperienceSection from "@/sections/ExperienceSection";
 import HeroSection from "@/sections/HeroSection";
+import ProjectsSection from "@/sections/ProjectSection";
 import SkillsSection from "@/sections/SkillsSection";
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
       <AboutSection />
       <ExperienceSection />
       <SkillsSection />
+      <ProjectsSection />
     </main>
   );
 }
