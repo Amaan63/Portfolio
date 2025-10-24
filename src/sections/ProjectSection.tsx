@@ -244,18 +244,12 @@ const ProjectsSection: React.FC = () => {
           </div>
           {/* Filter Section */}
           <div className="relative mb-12 sm:mb-16 lg:mb-20 z-20" ref={filtersContainerRef}>
-
-
             {/* Filter Buttons Container - FRAMER MOTION VERSION */}
             <motion.div
               ref={filterButtonsRef}
               className="relative z-30 flex flex-wrap justify-center gap-3 sm:gap-4"
               initial={{ opacity: 0, y: 20 }}
-              animate={
-                (typeof window !== "undefined" && window.innerWidth >= 768)
-                  ? { opacity: 1, y: 0, pointerEvents: "auto" }
-                  : { opacity: 0, y: -10, pointerEvents: "none" }
-              }
+              animate={{ opacity: 1, y: 0, pointerEvents: "auto" }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
             >
               {filters.map((filterName, index) => {
