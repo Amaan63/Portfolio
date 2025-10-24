@@ -50,7 +50,7 @@ const Header = () => {
     { label: "Experience", href: "#experience", icon: "💼", color: "text-green-400" },
     { label: "Skills", href: "#skills", icon: "⚡", color: "text-yellow-400" },
     { label: "Projects", href: "#projects", icon: "🚀", color: "text-pink-400" },
-    { label: "HackerRank", href: "#hackerrank", icon: "🏆", color: "text-orange-400" },
+    { label: "Certifications", href: "#certifications", icon: "🏆", color: "text-orange-400" },
     { label: "Vibes", href: "#vibes", icon: "🎵", color: "text-indigo-400" },
     { label: "Contact", href: "#contact", icon: "📱", color: "text-red-400" },
   ];
