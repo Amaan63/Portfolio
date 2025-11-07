@@ -21,6 +21,7 @@ interface Track {
   artist: string;
   album: string;
   duration: string;
+  image?: string;
   mood: "focus" | "chill" | "motivated" | "intense" | "other";
 }
 
@@ -29,62 +30,20 @@ interface Playlist {
   tracks: Track[];
 }
 
-const spotifyPlaylist: Playlist = {
-  totalTracks: 5,
-  tracks: [
-    {
-      id: 1,
-      name: "Midnight Drive",
-      artist: "Dreamwave",
-      album: "Neon Nights",
-      duration: "3:42",
-      mood: "chill",
-    },
-    {
-      id: 2,
-      name: "Focus Flow",
-      artist: "LoFi Beats",
-      album: "Deep Coding Vibes",
-      duration: "4:10",
-      mood: "focus",
-    },
-    {
-      id: 3,
-      name: "Motivated Mode",
-      artist: "Energize",
-      album: "Morning Boost",
-      duration: "3:58",
-      mood: "motivated",
-    },
-    {
-      id: 4,
-      name: "Code Rush",
-      artist: "Binary Sound",
-      album: "Digital Pulse",
-      duration: "3:21",
-      mood: "intense",
-    },
-    {
-      id: 5,
-      name: "Tech Serenity",
-      artist: "ByteWaves",
-      album: "Ocean of Code",
-      duration: "4:00",
-      mood: "chill",
-    },
-  ],
-};
-
 const VibesSection: React.FC = () => {
+  const [spotifyPlaylist, setSpotifyPlaylist] = useState<Playlist | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [currentTrack, setCurrentTrack] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [progress, setProgress] = useState<number>(0);
   const vibesRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(vibesRef, { once: true });
 
+  // progress animation
   useEffect(() => {
     const interval = setInterval(() => {
-      if (isPlaying) {
+      if (isPlaying && spotifyPlaylist) {
         setProgress((prev) => {
           if (prev >= 100) {
             setCurrentTrack(
@@ -98,7 +57,42 @@ const VibesSection: React.FC = () => {
     }, 100);
 
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [isPlaying, spotifyPlaylist]);
+
+  // Fetch Spotify top tracks
+  useEffect(() => {
+    async function fetchSpotifyData() {
+      try {
+        const res = await fetch("/api/spotify/top-tracks");
+        if (!res.ok) throw new Error("Failed to fetch Spotify data");
+        const data = await res.json();
+
+        const formatted = {
+          totalTracks: data.length,
+          tracks: data?.slice(0, 5).map((track: any, index: number) => ({
+            id: index,
+            name: track.name,
+            artist: track.artists.map((a: any) => a.name).join(", "),
+            album: track.album.name,
+            duration: `${Math.floor(track.duration_ms / 60000)}:${String(
+              Math.floor((track.duration_ms % 60000) / 1000)
+            ).padStart(2, "0")}`,
+            mood: "chill",
+            image: track.album.images?.[1]?.url,
+          })),
+        };
+
+        setSpotifyPlaylist(formatted);
+      } catch (error: any) {
+        console.error("Error fetching Spotify data:", error);
+        setError("Unable to fetch your Spotify tracks 😢");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchSpotifyData();
+  }, []);
 
   const vibeCards = [
     {
@@ -131,7 +125,28 @@ const VibesSection: React.FC = () => {
     },
   ];
 
-  const currentTrackData = spotifyPlaylist.tracks[currentTrack];
+  if (loading)
+    return (
+      <div className="text-center py-20 text-gray-300">
+        Loading your Spotify vibes 🎧...
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="text-center py-20 text-red-400">
+        {error} <br /> Try refreshing the page.
+      </div>
+    );
+
+  const currentTrackData =
+    spotifyPlaylist?.tracks[currentTrack] || {
+      name: "No track playing",
+      artist: "",
+      album: "",
+      duration: "0:00",
+      image: undefined,
+    };
 
   return (
     <motion.section
@@ -215,27 +230,25 @@ const VibesSection: React.FC = () => {
                     Currently Vibing To
                   </h3>
                   <p className="text-gray-400 text-sm">
-                    My Coding Playlist • {spotifyPlaylist.totalTracks} songs
+                    My Coding Playlist • {spotifyPlaylist?.totalTracks || 0}{" "}
+                    songs
                   </p>
                 </div>
               </div>
 
               {/* Track Info */}
               <div className="flex flex-wrap items-center gap-4 mb-6">
-                <motion.div
-                  className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-2xl shadow-lg"
-                  animate={{
-                    boxShadow: isPlaying
-                      ? [
-                        "0 0 0 0px rgba(168,85,247,0.4)",
-                        "0 0 0 20px rgba(168,85,247,0)",
-                      ]
-                      : "0 0 0 0px rgba(168,85,247,0)",
-                  }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  🎵
-                </motion.div>
+                {currentTrackData.image ? (
+                  <motion.img
+                    src={currentTrackData.image}
+                    alt={currentTrackData.name}
+                    className="w-16 h-16 rounded-lg shadow-lg object-cover"
+                  />
+                ) : (
+                  <div className="w-16 h-16 bg-gray-700 rounded-lg flex items-center justify-center text-2xl">
+                    🎵
+                  </div>
+                )}
 
                 <div className="flex-1 min-w-[150px]">
                   <h4 className="font-bold text-white text-base sm:text-lg">
@@ -244,7 +257,9 @@ const VibesSection: React.FC = () => {
                   <p className="text-gray-400 text-sm">
                     {currentTrackData.artist}
                   </p>
-                  <p className="text-gray-500 text-xs">{currentTrackData.album}</p>
+                  <p className="text-gray-500 text-xs">
+                    {currentTrackData.album}
+                  </p>
                 </div>
               </div>
 
@@ -258,7 +273,7 @@ const VibesSection: React.FC = () => {
                   />
                 </div>
                 <div className="flex justify-between text-xs text-gray-400 mt-2">
-                  <span>{Math.floor((progress / 100) * 222)} sec</span>
+                  <span>{Math.floor((progress / 100) * 180)} sec</span>
                   <span>{currentTrackData.duration}</span>
                 </div>
               </div>
@@ -270,7 +285,7 @@ const VibesSection: React.FC = () => {
                   onClick={() =>
                     setCurrentTrack(
                       currentTrack === 0
-                        ? spotifyPlaylist.tracks.length - 1
+                        ? (spotifyPlaylist?.tracks.length || 1) - 1
                         : currentTrack - 1
                     )
                   }
@@ -287,7 +302,8 @@ const VibesSection: React.FC = () => {
                   className="text-gray-400 hover:text-white transition-colors"
                   onClick={() =>
                     setCurrentTrack(
-                      (currentTrack + 1) % spotifyPlaylist.tracks.length
+                      (currentTrack + 1) %
+                      (spotifyPlaylist?.tracks.length || 1)
                     )
                   }
                 >
@@ -297,6 +313,7 @@ const VibesSection: React.FC = () => {
             </div>
           </motion.div>
         </div>
+
         {/* Fun Stats */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -309,9 +326,7 @@ const VibesSection: React.FC = () => {
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-3xl font-bold text-green-400 mb-2">
-                12.8K
-              </div>
+              <div className="text-3xl font-bold text-green-400 mb-2">12.8K</div>
               <div className="text-gray-400">Minutes of Music</div>
             </div>
             <div>
@@ -329,8 +344,6 @@ const VibesSection: React.FC = () => {
           </div>
         </motion.div>
       </div>
-
-
     </motion.section>
   );
 };
