@@ -14,7 +14,7 @@ import {
 import { certificateData } from '@/data/certificate';
 
 // Combine motion with Next.js Image
-const MotionImage = motion(Image);
+const MotionImage = motion.create(Image);
 
 
 const CertificateSection: React.FC = () => {
