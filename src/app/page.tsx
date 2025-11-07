@@ -4,6 +4,7 @@ import ExperienceSection from "@/sections/ExperienceSection";
 import HeroSection from "@/sections/HeroSection";
 import ProjectsSection from "@/sections/ProjectSection";
 import SkillsSection from "@/sections/SkillsSection";
+import VibesSection from "@/sections/VibesSection";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <SkillsSection />
       <ProjectsSection />
       <CertificateSection />
+      <VibesSection />
     </main>
   );
 }
