@@ -1,5 +1,6 @@
 import AboutSection from "@/sections/AboutUs";
 import CertificateSection from "@/sections/CertificateSection";
+import ContactSection from "@/sections/ContactSection";
 import ExperienceSection from "@/sections/ExperienceSection";
 import HeroSection from "@/sections/HeroSection";
 import ProjectsSection from "@/sections/ProjectSection";
@@ -16,6 +17,7 @@ export default function Home() {
       <ProjectsSection />
       <CertificateSection />
       <VibesSection />
+      <ContactSection />
     </main>
   );
 }
