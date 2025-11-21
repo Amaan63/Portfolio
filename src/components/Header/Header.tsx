@@ -21,7 +21,7 @@ const Header = () => {
 
   // 🔹 GSAP intro animation
   useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.2 });
+    const tl = gsap.timeline();
 
     // Animate TO a visible state
     tl.to(logoRef.current, {
