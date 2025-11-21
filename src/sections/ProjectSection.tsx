@@ -220,7 +220,7 @@ const ProjectsSection: React.FC = () => {
           <div className="absolute top-1/2 left-1/4 w-60 h-60 bg-blue-600/5 rounded-full blur-3xl animate-pulse animation-delay-2000" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header Section */}
           <div className="text-center mb-12 sm:mb-16 lg:mb-20" ref={titleRef}>
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-400/20 to-purple-600/20 backdrop-blur-sm border border-cyan-400/30 px-4 py-2 rounded-full mb-4 sm:mb-6">

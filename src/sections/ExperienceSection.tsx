@@ -36,7 +36,7 @@ const ExperienceSection: React.FC = () => {
 
   return (
     <section id="experience" className="py-12 sm:py-16 lg:py-20 bg-black text-white scroll-mt-20">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1800px] w-full mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
           className="text-center mb-10 sm:mb-14 lg:mb-16"

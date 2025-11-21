@@ -40,14 +40,18 @@ const ContactSection = () => {
         body: JSON.stringify(formData),
       });
 
-      if (!res.ok) throw new Error("Failed to send email");
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to send email");
+      }
 
       confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
       setFormData({ name: "", email: "", subject: "", message: "" });
       alert("Thanks for reaching out! Check your email 🚀");
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      alert("Something went wrong. Please try again.");
+      alert(err.message || "Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -59,7 +63,7 @@ const ContactSection = () => {
       className="py-20 bg-black text-white"
       ref={contactRef}
     >
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-[1800px] w-full mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}

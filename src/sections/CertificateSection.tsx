@@ -71,7 +71,7 @@ const CertificateSection: React.FC = () => {
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-radial from-emerald-700/10 via-transparent to-transparent blur-3xl opacity-40 animate-pulse animation-delay-2000" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-[1800px] w-full mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
           className="text-center mb-14 sm:mb-16 lg:mb-20"

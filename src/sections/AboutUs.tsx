@@ -56,7 +56,7 @@ const AboutSection: React.FC = () => {
 
   return (
     <section id="about" className="py-20 pt-20 bg-black text-white scroll-mt-24" ref={aboutRef}>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1800px] w-full mx-auto px-4 sm:px-6 lg:px-8">
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}

@@ -32,7 +32,7 @@ export const workExperience: Experience[] = [
       'Optimized attendance, sales, and HR reporting through advanced SQL queries.',
       'Built responsive web interfaces improving usability across modules.',
     ],
-    logo: 'https://media.licdn.com/dms/image/v2/D4D0BAQGSN0dagP6DYQ/company-logo_200_200/B4DZYestHtHIAI-/0/1744271758311?e=1762387200&v=beta&t=RWvB3o0g0R9eSNRwuHiELM1Cc3AQvKIv9jv778oGITw', // Using a placeholder, replace with your actual logo URL
+    logo: 'https://robocrm.in/Images/Logocrn.png', // Using a placeholder, replace with your actual logo URL
     gradient: 'from-green-500 to-emerald-600',
   },
   {
@@ -51,7 +51,7 @@ export const workExperience: Experience[] = [
       'Integrated voice assistant functionality for calendar and sheet automation.',
       'Orchestrated data synchronization and API-based automation across platforms.',
     ],
-    logo: 'https://media.licdn.com/dms/image/v2/D560BAQH1JYy1lXmxgQ/company-logo_200_200/B56ZYaQ21CH0AM-/0/1744197349555/mcm_bpo_logo?e=1762387200&v=beta&t=HehR3SpRYPVqK2HANWElFDhpeG97slDyrOrZUpzZ4-E', // Using a placeholder, replace with your actual logo URL
+    logo: 'https://media.licdn.com/dms/image/v2/D560BAQH1JYy1lXmxgQ/company-logo_200_200/B56ZYaQ21CH0AM-/0/1744197349555/mcm_bpo_logo?e=2147483647&v=beta&t=bgt6P1sqt6E7Y37Q2u4U2M_D4i8suskSdt5MdlxHiLI', // Using a placeholder, replace with your actual logo URL
     gradient: 'from-orange-500 to-red-600',
   },
 ];
